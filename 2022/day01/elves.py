@@ -2,7 +2,6 @@ import pathlib
 
 
 class ElfCalories:
-
     def __init__(self, calories_input: pathlib.Path) -> None:
         content = calories_input.read_text()
         self.elf_calories = content.split("\n\n")
