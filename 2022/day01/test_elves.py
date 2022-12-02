@@ -1,7 +1,6 @@
 import pathlib
 
 import pytest
-
 from elves import ElfCalories
 
 EXERCISE_INLINE_EXAMPLE = """1000
