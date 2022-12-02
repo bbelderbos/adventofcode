@@ -8,10 +8,14 @@ class ElfCalories:
         self.elf_calories = content.split("\n\n")
         self.total_kcal_per_elf = sorted(self._calculate_kcal_per_elf())
 
+    def _extract_calories(self, line: str) -> int:
+        return sum(int(i) for i in line.split())
+
     def _calculate_kcal_per_elf(self) -> list[int]:
         total_kcal_per_elf = []
-        for calorie_line in self.elf_calories:
-            total_kcal_per_elf.append(sum(int(i) for i in calorie_line.split()))
+        for line in self.elf_calories:
+            calories = self._extract_calories(line)
+            total_kcal_per_elf.append(calories)
         return total_kcal_per_elf
 
     def get_max_kcal_elves(self) -> int:
