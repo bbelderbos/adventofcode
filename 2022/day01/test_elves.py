@@ -4,7 +4,7 @@ import pytest
 
 from elves import ElfCalories
 
-exercise_data = """1000
+EXERCISE_INLINE_EXAMPLE = """1000
 2000
 3000
 
@@ -19,17 +19,18 @@ exercise_data = """1000
 
 10000
 """
+BASE_DIR = pathlib.Path(__file__).parent
 
 
 @pytest.fixture
 def test_data_path1():
-    return pathlib.Path("elf-calories.txt")
+    return BASE_DIR / "elf-calories.txt"
 
 
 @pytest.fixture
 def test_data_path2(tmp_path):
     path = pathlib.Path(tmp_path) / "data.txt"
-    path.write_text(exercise_data)
+    path.write_text(EXERCISE_INLINE_EXAMPLE)
     return path
 
 
