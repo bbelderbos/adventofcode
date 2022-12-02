@@ -16,12 +16,12 @@ def _calculate_kcal_per_elf():
 
 
 total_kcal_per_elf = _calculate_kcal_per_elf()
+total_kcal_per_elf_sorted = sorted(total_kcal_per_elf)
 
 
 def get_max_kcal_elves():
-    return max(total_kcal_per_elf)
+    return total_kcal_per_elf_sorted[-1]
 
 
 def get_total_kcal_top_elves(n=3):
-    top_elves = sorted(total_kcal_per_elf, reverse=True)[:n]
-    return sum(top_elves)
+    return sum(total_kcal_per_elf_sorted[-n:])
