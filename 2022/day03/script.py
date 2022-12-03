@@ -6,24 +6,17 @@ ITEM_PRIORITIES = dict(
 )
 
 
-class Item(typing.NamedTuple):
-    letter: str
-    value: int
-
-
-def get_item(rugsack: str) -> Item:
+def get_item_value(rugsack: str) -> int:
     half_index = len(rugsack) // 2
     first_compartment = rugsack[:half_index]
     second_compartment = rugsack[half_index:]
 
     (common_item,) = set(first_compartment) & set(second_compartment)
-    item_value = ITEM_PRIORITIES[common_item]
-
-    return Item(common_item, item_value)
+    return ITEM_PRIORITIES[common_item]
 
 
 def get_total_sum_of_priorities(all_rugsacks: str) -> int:
-    return sum(get_item(rugsack.strip()).value for rugsack in all_rugsacks.splitlines())
+    return sum(get_item_value(rugsack.strip()) for rugsack in all_rugsacks.splitlines())
 
 
 def get_common_item(batch_rugsacks: list[str]) -> str:
