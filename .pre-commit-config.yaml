@@ -32,12 +32,3 @@ repos:
   rev: v3.2.3
   hooks:
     - id: pyupgrade
-
-- repo: local
-  hooks:
-    - id: pytest-check
-      name: pytest-check
-      entry: pytest
-      language: system
-      pass_filenames: false
-      always_run: true
