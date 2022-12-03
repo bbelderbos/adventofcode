@@ -6,6 +6,9 @@ ITEM_PRIORITIES = dict(
 )
 
 
+# part 1
+
+
 def get_item_value(rugsack: str) -> int:
     half_index = len(rugsack) // 2
     first_compartment = rugsack[:half_index]
@@ -17,6 +20,9 @@ def get_item_value(rugsack: str) -> int:
 
 def get_total_sum_of_priorities(all_rugsacks: str) -> int:
     return sum(get_item_value(rugsack.strip()) for rugsack in all_rugsacks.splitlines())
+
+
+# part 2
 
 
 def get_common_item(batch_rugsacks: list[str]) -> str:
