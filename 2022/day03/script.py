@@ -17,7 +17,7 @@ def get_item(rugsack: str) -> Item:
     second_compartment = rugsack[half_index:]
 
     (common_item,) = set(first_compartment) & set(second_compartment)
-    item_value = ITEM_PRIORITIES.get(common_item)
+    item_value = ITEM_PRIORITIES[common_item]
 
     return Item(common_item, item_value)
 
