@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from script import calculate_number_if_overlaps
+from script import total_number_of_overlapping_ranges
 
 BASE_DIR = Path(__file__).parent
 
@@ -15,9 +15,9 @@ EXERCISE_SAMPLE = """
 
 
 def test_part1_with_sample():
-    assert calculate_number_if_overlaps(EXERCISE_SAMPLE) == 2
+    assert total_number_of_overlapping_ranges(EXERCISE_SAMPLE) == 2
 
 
 def test_part1_with_input_file():
     pairs = (BASE_DIR / "input.txt").read_text()
-    assert calculate_number_if_overlaps(pairs) == 511
+    assert total_number_of_overlapping_ranges(pairs) == 511

@@ -10,7 +10,7 @@ def _has_overlap(first: Iterable, second: Iterable) -> bool:
     return min(first) >= min(second) and max(first) <= max(second)
 
 
-def calculate_number_if_overlaps(pairs: str) -> int:
+def total_number_of_overlapping_ranges(pairs: str) -> int:
     total = 0
     for pair in pairs.splitlines():
         first, second = pair.split(",")
