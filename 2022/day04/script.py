@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Callable, Iterable
 
 
 def _create_section_range(pair: str) -> Iterable:
@@ -6,17 +6,23 @@ def _create_section_range(pair: str) -> Iterable:
     return range(int(start), int(end) + 1)
 
 
-def _has_overlap(first: Iterable, second: Iterable) -> bool:
-    return min(first) >= min(second) and max(first) <= max(second)
+def has_all_overlaps(first: Iterable, second: Iterable) -> bool:
+    return all(i in second for i in first)
 
 
-def total_number_of_overlapping_ranges(pairs: str) -> int:
+def has_any_overlap(first: Iterable, second: Iterable) -> bool:
+    return any(i in second for i in first)
+
+
+def calculate_number_of_overlaps(
+    pairs: str, overlap: Callable = has_all_overlaps
+) -> int:
     total = 0
     for pair in pairs.splitlines():
         first, second = pair.split(",")
         first_section = _create_section_range(first)
         second_section = _create_section_range(second)
-        if _has_overlap(first_section, second_section) or _has_overlap(
+        if overlap(first_section, second_section) or overlap(
             second_section, first_section
         ):
             total += 1
