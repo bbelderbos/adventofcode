@@ -2,7 +2,7 @@
 set -e
 
 if [ "$#" -ne 1 ]; then
-	echo "Usage: $0 day-num" >&2
+	echo "Usage: $0 day number (eg 05)" >&2
 	exit 1
 fi
 
