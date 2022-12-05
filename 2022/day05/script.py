@@ -1,6 +1,7 @@
 import re
+from collections import deque
 
-Stacks = list[list[str]]
+Stacks = list[deque[str]]
 
 
 def populate_stacks(stack_data: str) -> Stacks:
@@ -9,13 +10,16 @@ def populate_stacks(stack_data: str) -> Stacks:
     # cannot do [[]] * num_stacks (= by reference / lists with same id!)
     stacks: Stacks = []
     for _ in range(number_of_stacks):
-        stacks.append([])
+        stacks.append(deque())
 
     for line in stack_data.splitlines()[:-1]:
         crates = re.findall(r"(?:\s{3}|(\[[A-Z]\]))\s?", line)
-        # argh the spaces after [V] get truncated
+
+        # argh the spaces after [V] on the first line of the input file
+        # is getting truncated so need to make this ugly hack
         if len(crates) < number_of_stacks:
-            crates.append("")  # 8 -> 9
+            for _ in range(number_of_stacks - len(crates)):
+                crates.append("")  # 8 -> 9
 
         for i, crate in enumerate(crates):
             if crate:
@@ -33,7 +37,7 @@ def move_crates(
         from_index = int(from_) - 1
         to_index = int(to_) - 1
 
-        from_crates = [stacks[from_index].pop(0) for _ in range(amount)]
+        from_crates = [stacks[from_index].popleft() for _ in range(amount)]
 
         if retain_order:
             from_crates.reverse()
@@ -46,6 +50,9 @@ def move_crates(
 
 def get_top_level_crates(input_text: str, retain_order: bool = False) -> str:
     stack_data, instructions = input_text.split("\n\n")
+
     stacks = populate_stacks(stack_data)
+
     updated_stacks = move_crates(stacks, instructions, retain_order=retain_order)
+
     return "".join(stack[0].strip("[]") for stack in updated_stacks)
