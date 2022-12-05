@@ -24,19 +24,28 @@ def populate_stacks(stack_data: str) -> Stacks:
     return stacks
 
 
-def move_crates(stacks: Stacks, instructions: str) -> Stacks:
+def move_crates(
+    stacks: Stacks, instructions: str, *, retain_order: bool = False
+) -> Stacks:
     for instruction in instructions.strip().splitlines():
         amount, from_, to_ = re.findall(r"\d+", instruction)
-        for _ in range(int(amount)):
-            from_index = int(from_) - 1
-            to_index = int(to_) - 1
-            from_crate = stacks[from_index].pop(0)
+        amount = int(amount)
+        from_index = int(from_) - 1
+        to_index = int(to_) - 1
+
+        from_crates = [stacks[from_index].pop(0) for _ in range(amount)]
+
+        if retain_order:
+            from_crates.reverse()
+
+        for from_crate in from_crates:
             stacks[to_index].insert(0, from_crate)  # TODO: use deque
+
     return stacks
 
 
-def get_top_level_crates(input_text: str) -> str:
+def get_top_level_crates(input_text: str, retain_order: bool = False) -> str:
     stack_data, instructions = input_text.split("\n\n")
     stacks = populate_stacks(stack_data)
-    updated_stacks = move_crates(stacks, instructions)
+    updated_stacks = move_crates(stacks, instructions, retain_order=retain_order)
     return "".join(stack[0].strip("[]") for stack in updated_stacks)

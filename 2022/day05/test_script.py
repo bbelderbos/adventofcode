@@ -34,5 +34,13 @@ def test_part1_inline_sample(inline_sample):
     assert get_top_level_crates(inline_sample) == "CMZ"
 
 
+def test_part2_inline_sample(inline_sample):
+    assert get_top_level_crates(inline_sample, retain_order=True) == "MCD"
+
+
 def test_part1_file_sample(file_sample):
     assert get_top_level_crates(file_sample) == "FCVRLMVQP"
+
+
+def test_part2_file_sample(file_sample):
+    assert get_top_level_crates(file_sample, retain_order=True) == "RWLWGJGFD"
