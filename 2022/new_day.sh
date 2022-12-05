@@ -13,4 +13,4 @@ touch $dir/input.txt
 touch $dir/script.py
 touch $dir/test_script.py
 
-git checkout -b $dir
+git checkout main && git checkout -b $dir
