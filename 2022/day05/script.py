@@ -43,7 +43,7 @@ def move_crates(
             from_crates.reverse()
 
         for from_crate in from_crates:
-            stacks[to_index].insert(0, from_crate)  # TODO: use deque
+            stacks[to_index].insert(0, from_crate)
 
     return stacks
 
