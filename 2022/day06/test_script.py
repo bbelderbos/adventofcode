@@ -46,3 +46,8 @@ def test_part2_exercise_samples(inp, expected):
 
 def test_part2_file_sample(file_sample):
     assert solution_part1(file_sample, marker_length=14) == 3051
+
+
+def test_exception():
+    with pytest.raises(AssertionError):
+        solution_part1("mjq")
