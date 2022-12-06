@@ -1,4 +1,3 @@
-import textwrap
 from pathlib import Path
 
 import pytest
@@ -6,14 +5,6 @@ import pytest
 from script import solution_part1
 
 BASE_DIR = Path(__file__).parent
-
-
-@pytest.fixture
-def inline_sample():
-    return textwrap.dedent(
-        """
-        """
-    ).rstrip()
 
 
 @pytest.fixture
@@ -31,7 +22,7 @@ def file_sample():
         ("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 11),
     ],
 )
-def test_part1_inline_sample(inp, expected):
+def test_part1_exercise_samples(inp, expected):
     assert solution_part1(inp) == expected
 
 
@@ -49,7 +40,7 @@ def test_part1_file_sample(file_sample):
         ("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw", 26),
     ],
 )
-def test_part2_inline_sample(inp, expected):
+def test_part2_exercise_samples(inp, expected):
     assert solution_part1(inp, marker_length=14) == expected
 
 
