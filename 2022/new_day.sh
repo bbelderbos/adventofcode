@@ -7,10 +7,5 @@ if [ "$#" -ne 1 ]; then
 fi
 
 dir=day$1
-
-mkdir $dir
-touch $dir/input.txt
-touch $dir/script.py
-touch $dir/test_script.py
-
 git checkout main && git checkout -b $dir
+cp -r template $dir
