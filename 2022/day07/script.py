@@ -35,6 +35,8 @@ def _get_files_per_dir(data: str) -> Dirs:
             while True:
                 dirs[cwd_copy].append(file)
                 cwd_copy = cwd_copy.parent
+                # not super happy about this part but this way / (root) has all
+                # the files making it easier to get the total size for part 2
                 if cwd_copy == root:
                     if file not in dirs[root]:
                         dirs[root].append(file)
@@ -56,8 +58,8 @@ def solution_part1(data: str) -> int:
 
 def solution_part2(data: str) -> int:
     dir_files = _get_files_per_dir(data)
-    dir_sizes = {}
 
+    dir_sizes = {}
     for d, files in dir_files.items():
         dir_sizes[d] = sum(fi.size for fi in files)
     dir_sizes_sorted = sorted(dir_sizes.values())
