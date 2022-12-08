@@ -27,9 +27,6 @@ def _get_files_per_dir(data: str) -> Dirs:
                 cwd /= dir_name
                 dirs[cwd] = []
 
-        elif line.startswith(("dir", "$ ls")):
-            continue
-
         elif str(line[0]).isdigit():
             size, file_name = line.split()
             file = File(file_name, int(size))
@@ -42,9 +39,6 @@ def _get_files_per_dir(data: str) -> Dirs:
                     if file not in dirs[root]:
                         dirs[root].append(file)
                     break
-
-        else:
-            raise ValueError("Cannot parse line", line)
 
     return dirs
 
