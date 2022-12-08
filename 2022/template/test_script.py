@@ -1,37 +1,25 @@
-import textwrap
 from pathlib import Path
-
-import pytest
 
 from script import solution_part1, solution_part2
 
-BASE_DIR = Path(__file__).parent
+EXERCISE_SAMPLE = """
+""".strip()
+EXERCISE_FILE_CONTENT = (Path(__file__).parent / "input.txt").read_text()
+EXPECTED_SAMPLE = 1
+EXPECTED_FILE = 1
 
 
-@pytest.fixture
-def inline_sample():
-    return textwrap.dedent(
-        """
-        """
-    ).rstrip()
+def test_p1_sample():
+    assert solution_part1(EXERCISE_SAMPLE) == EXPECTED_SAMPLE
 
 
-@pytest.fixture
-def file_sample():
-    return (BASE_DIR / "input.txt").read_text()
+def test_p1_file():
+    assert solution_part1(EXERCISE_FILE_CONTENT) == 2
 
 
-def test_part1_inline_sample(inline_sample):
-    assert solution_part1(inline_sample) == ""
+def test_p2_sample():
+    assert solution_part2(EXERCISE_SAMPLE) == EXPECTED_FILE
 
 
-def test_part1_file_sample(file_sample):
-    assert solution_part1(file_sample) == ""
-
-
-def test_part2_inline_sample(inline_sample):
-    assert solution_part2(inline_sample) == ""
-
-
-def test_part2_file_sample(file_sample):
-    assert solution_part2(file_sample) == ""
+def test_p2_file():
+    assert solution_part2(EXERCISE_FILE_CONTENT) == 2
