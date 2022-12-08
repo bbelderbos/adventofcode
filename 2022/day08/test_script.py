@@ -35,8 +35,8 @@ def test_part1_file_sample(file_sample):
 
 
 def test_part2_inline_sample(inline_sample):
-    assert solution_part2(inline_sample) == ""
+    assert solution_part2(inline_sample) == 8
 
 
 def test_part2_file_sample(file_sample):
-    assert solution_part2(file_sample) == ""
+    assert solution_part2(file_sample) == 595080
