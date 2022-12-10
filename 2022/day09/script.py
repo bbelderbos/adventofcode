@@ -25,12 +25,12 @@ def solution_part1(data: str) -> int:
     for line in data.strip().splitlines():
         move, steps = line.split()
 
-        multiplier = 1 if move in ("R", "D") else -1
+        direction = 1 if move in ("R", "D") else -1
         coord = 0 if move in ("U", "D") else 1
 
         for _ in range(int(steps)):
             prev_h_pos = list(h_pos)
-            h_pos[coord] += multiplier
+            h_pos[coord] += direction
 
             if not h_touches_t(h_pos, t_pos) and not overlaps(h_pos, t_pos):
                 t_pos = prev_h_pos
