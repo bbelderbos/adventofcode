@@ -4,16 +4,14 @@ from typing import Iterable
 def get_x_values(lines: list[str]) -> list[tuple[int, int]]:
     x = 1
     results = []
-    amount: str | int
     for i, instruction in enumerate(lines):
         if instruction == "noop":
             results.append((i, x))
         elif instruction.startswith("addx"):
             instruction, amount = instruction.split()
-            amount = int(amount)
             results.append((i, x))
             i += 1
-            x += amount
+            x += int(amount)
             results.append((i, x))
         else:
             raise AssertionError(instruction + "?")
