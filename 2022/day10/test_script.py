@@ -152,16 +152,7 @@ noop
 """.strip()
 EXERCISE_FILE_CONTENT = (Path(__file__).parent / "input.txt").read_text()
 
-# exercise might have a off by 1 issue?
-# pp results
-# ...
-# (218, (132, 18))
-# (219, (133, 19))
-# ...
-# my index 219 (cycle 220) has 19 not 18 which
-# makes my sample result 220 higher = 13360,
-# not text's 13140
-EXPECTED_SAMPLE_P1 = 13360
+EXPECTED_SAMPLE_P1 = 13140
 EXPECTED_FILE_P1 = 15260
 EXPECTED_SAMPLE_P2 = """
 ##..##..##..##..##..##..##..##..##..##..
