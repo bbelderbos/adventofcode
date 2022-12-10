@@ -1,6 +1,10 @@
-def get_x_values(lines):
+from typing import Iterable
+
+
+def get_x_values(lines: list[str]) -> list[tuple[int, int]]:
     x = 1
     results = []
+    amount: str | int
     for i, instruction in enumerate(lines):
         if instruction == "noop":
             results.append((i, x))
@@ -19,31 +23,27 @@ def get_x_values(lines):
 def solution_part1(data: str) -> int:
     lines = data.strip().splitlines()
     results = get_x_values(lines)
-    return sum(
-        index * results[index-1][1]
-        for index in range(20, 221, 40)
-    )
+    cycles = range(20, 221, 40)
+    return sum(i * results[i - 1][1] for i in cycles)
 
 
-def solution_part2(data: str) -> int:
+def _set_sprite(x: int) -> Iterable:
+    return range(x - 1, x + 2)
+
+
+def solution_part2(data: str) -> str:
     lines = data.strip().splitlines()
+    row: list[str] = []
     rows = []
-    output_line = []
-    sprite = range(0, 3)
+    x, nl = 1, 40
+    sprite = _set_sprite(x)
     results = get_x_values(lines)
 
     for i, (_, x) in enumerate(results, start=1):
-        if len(output_line) in sprite:
-            output_line.append("#")
-        else:
-            output_line.append(".")
+        row.append("#" if len(row) in sprite else ".")
+        sprite = _set_sprite(x)
+        if i % nl == 0:
+            rows.append(row)
+            row = []
 
-        sprite = range(x-1, x+2)
-
-        if i % 40 == 0:
-            rows.append(output_line)
-            output_line = []
-
-    return "\n".join(
-        "".join(row) for row in rows
-    )
+    return "\n".join("".join(row) for row in rows)
