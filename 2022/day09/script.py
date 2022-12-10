@@ -20,24 +20,23 @@ def h_touches_t(h_pos: list[int], t_pos: list[int]) -> bool:
 def solution_part1(data: str) -> int:
     h_pos = [START_X, START_Y]
     t_pos = [START_X, START_Y]
-    num_t_visits = {tuple(t_pos)}
+    t_visits = {tuple(t_pos)}
 
     for line in data.strip().splitlines():
-        move, steps_ = line.split()
-        steps = int(steps_)  # mypy requires extra var?
+        move, steps = line.split()
 
         multiplier = 1 if move in ("R", "D") else -1
         coord = 0 if move in ("U", "D") else 1
 
-        for _ in range(steps):
+        for _ in range(int(steps)):
             prev_h_pos = list(h_pos)
             h_pos[coord] += multiplier
 
             if not h_touches_t(h_pos, t_pos) and not overlaps(h_pos, t_pos):
                 t_pos = prev_h_pos
-                num_t_visits.add(tuple(t_pos))
+                t_visits.add(tuple(t_pos))
 
-    return len(num_t_visits)
+    return len(t_visits)
 
 
 def solution_part2(data: str) -> int:
