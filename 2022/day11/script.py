@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from operator import add, mul
 
 OPERATIONS = {"*": mul, "+": add}
-BORED_LEVEL = 3
+DEFAULT_RELIEF_LEVEL = 0
 OLD = "old"
 
 
@@ -30,17 +30,18 @@ class Monkey:
     op_value: str
     test: int
     destinations: list[int]
-    bored_level: int = BORED_LEVEL
+    relief: int = DEFAULT_RELIEF_LEVEL
 
     def __post_init__(self):
         self.op = OPERATIONS[self.op]
 
     def update_worry_levels(self):
-        self.items = [
-            self.op(item, item if self.op_value == OLD else int(self.op_value))
-            // self.bored_level
-            for item in self.items
-        ]
+        for i, item in enumerate(self.items):
+            item2 = item if self.op_value == OLD else int(self.op_value)
+            result = self.op(item, item2)
+            if self.relief > 0:
+                result = result // self.relief
+            self.items[i] = result
 
     @property
     def to_monkeys(self):
@@ -67,6 +68,10 @@ class MonkeyManager:
             self.monkey_items[m.idx] += len(m.items)
             m.items.clear()
 
+    def set_relief_level(self, relief: int):
+        for m in self.monkeys:
+            m.relief = relief
+
     def print_monkeys(self):
         print(*self.monkeys, sep="\n")
 
@@ -74,6 +79,7 @@ class MonkeyManager:
 def solution_part1(data: str) -> int:
     monkeys = _parse_input(data)
     mm = MonkeyManager(monkeys)
+    mm.set_relief_level(3)
     for _ in range(20):
         mm.play_round()
     top_2 = mm.monkey_items.most_common()[:2]
@@ -81,4 +87,10 @@ def solution_part1(data: str) -> int:
 
 
 def solution_part2(data: str) -> int:
-    pass
+    monkeys = _parse_input(data)
+    mm = MonkeyManager(monkeys)
+    # for _ in range(10_000):
+    for _ in range(650):
+        mm.play_round()
+    top_2 = mm.monkey_items.most_common()[:2]
+    return top_2[0][1] * top_2[1][1]
