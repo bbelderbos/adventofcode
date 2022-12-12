@@ -36,7 +36,7 @@ class Monkey:
     def __post_init__(self):
         self.op = OPERATIONS[self.op]
 
-    def update_worry_levels(self, part=1, common_divisor=1):
+    def update_worry_levels(self, *, part, common_divisor):
         for i, item in enumerate(self.items):
             item2 = item if self.op_value == OLD else int(self.op_value)
             result = self.op(item, item2)
