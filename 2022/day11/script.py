@@ -3,7 +3,6 @@ from dataclasses import dataclass, field
 from operator import add, mul
 
 OPERATIONS = {"*": mul, "+": add}
-DEFAULT_RELIEF_LEVEL = 0
 OLD = "old"
 
 
@@ -32,17 +31,16 @@ class Monkey:
     test: int
     dest_true: int
     dest_false: int
-    relief: int = DEFAULT_RELIEF_LEVEL
 
     def __post_init__(self):
         self.op = OPERATIONS[self.op]
 
-    def update_worry_levels(self):
+    def update_worry_levels(self, part=1):
         for i, item in enumerate(self.items):
             item2 = item if self.op_value == OLD else int(self.op_value)
             result = self.op(item, item2)
-            if self.relief > 0:
-                result = result // self.relief
+            if part == 1:
+                result = result // 3
             self.items[i] = result
 
 
@@ -50,10 +48,11 @@ class Monkey:
 class MonkeyManager:
     monkeys: list[Monkey]
     monkey_items: Counter = field(default_factory=Counter)
+    part: int = 1
 
     def play_round(self):
         for m in self.monkeys:
-            m.update_worry_levels()
+            m.update_worry_levels(part=self.part)
 
             for item in m.items:
                 dest = m.dest_true if item % m.test == 0 else m.dest_false
@@ -62,10 +61,6 @@ class MonkeyManager:
             self.monkey_items[m.idx] += len(m.items)
             m.items.clear()
 
-    def set_relief_level(self, relief: int):
-        for m in self.monkeys:
-            m.relief = relief
-
     def print_monkeys(self):
         print(*self.monkeys, sep="\n")
 
@@ -73,7 +68,6 @@ class MonkeyManager:
 def solution_part1(data: str) -> int:
     monkeys = _parse_input(data)
     mm = MonkeyManager(monkeys)
-    mm.set_relief_level(3)
     for _ in range(20):
         mm.play_round()
     top_2 = mm.monkey_items.most_common()[:2]
@@ -82,7 +76,7 @@ def solution_part1(data: str) -> int:
 
 def solution_part2(data: str, rounds=650) -> int:
     monkeys = _parse_input(data)
-    mm = MonkeyManager(monkeys)
+    mm = MonkeyManager(monkeys, part=2)
     for _ in range(rounds):
         mm.play_round()
     top_2 = mm.monkey_items.most_common()[:2]
