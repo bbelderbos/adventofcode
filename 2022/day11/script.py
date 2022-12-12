@@ -86,11 +86,10 @@ def solution_part1(data: str) -> int:
     return top_2[0][1] * top_2[1][1]
 
 
-def solution_part2(data: str) -> int:
+def solution_part2(data: str, rounds=650) -> int:
     monkeys = _parse_input(data)
     mm = MonkeyManager(monkeys)
-    # for _ in range(10_000):
-    for _ in range(650):
+    for _ in range(rounds):
         mm.play_round()
     top_2 = mm.monkey_items.most_common()[:2]
     return top_2[0][1] * top_2[1][1]
