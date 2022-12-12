@@ -16,8 +16,9 @@ def _parse_input(data):
         items = [int(i) for i in items.split(":")[1].split(",")]
         op, op_value = op.split()[-2:]
         test = int(test.split()[-1])
-        destinations = [int(true[-1]), int(false[-1])]
-        m = Monkey(idx, items, op, op_value, test, destinations)
+        dest_true = int(true[-1])
+        dest_false = int(false[-1])
+        m = Monkey(idx, items, op, op_value, test, dest_true, dest_false)
         monkeys.append(m)
     return monkeys
 
@@ -29,7 +30,8 @@ class Monkey:
     op: str
     op_value: str
     test: int
-    destinations: list[int]
+    dest_true: int
+    dest_false: int
     relief: int = DEFAULT_RELIEF_LEVEL
 
     def __post_init__(self):
@@ -43,12 +45,6 @@ class Monkey:
                 result = result // self.relief
             self.items[i] = result
 
-    @property
-    def to_monkeys(self):
-        return [
-            self.destinations[0 if item % self.test == 0 else 1] for item in self.items
-        ]
-
 
 @dataclass
 class MonkeyManager:
@@ -59,11 +55,9 @@ class MonkeyManager:
         for m in self.monkeys:
             m.update_worry_levels()
 
-            for (
-                item,
-                index,
-            ) in zip(m.items, m.to_monkeys):
-                self.monkeys[index].items.append(item)
+            for item in m.items:
+                dest = m.dest_true if item % m.test == 0 else m.dest_false
+                self.monkeys[dest].items.append(item)
 
             self.monkey_items[m.idx] += len(m.items)
             m.items.clear()
