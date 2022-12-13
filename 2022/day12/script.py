@@ -27,8 +27,7 @@ def _get_possible_moves(grid, pos):
         rr = r + x
         cc = c + y
         destination = "z" if grid[rr][cc] == "E" else grid[rr][cc]
-        test = ord(current) >= ord(destination) - 1
-        if test:
+        if ord(current) >= ord(destination) - 1:
             moves.append((rr, cc))
     return moves
 
@@ -71,7 +70,6 @@ def solution_part1(data: str) -> int:
     start = coords(grid, "S")
     end = coords(grid, "E")
     path = shortest_path(grid, start, end)
-    print_grid(grid, path)
     return len(path)
 
 
