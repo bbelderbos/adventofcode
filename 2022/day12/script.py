@@ -1,6 +1,6 @@
-def coords(grid, find):
+def coords(grid, find, func=next):
     """Nice way: https://stackoverflow.com/a/53085140"""
-    return next(
+    return func(
         (i, j) for i, sub in enumerate(grid) for j, x in enumerate(sub) if x == find
     )
 
@@ -46,7 +46,7 @@ def shortest_path(grid, start_point, end_point):
         current_point = path[-1]
 
         if current_point == end_point:
-            return path
+            return path[1:]  # exclude start point
 
         moves = _get_possible_moves(grid, current_point)
         for move in moves:
@@ -72,8 +72,15 @@ def solution_part1(data: str) -> int:
     end = coords(grid, "E")
     path = shortest_path(grid, start, end)
     print_grid(grid, path)
-    return len(path[1:])  # exclude start point
+    return len(path)
 
 
 def solution_part2(data: str) -> int:
-    pass
+    grid = [list(row) for row in data.splitlines()]
+    end = coords(grid, "E")
+    start_points = [coords(grid, "S")] + list(coords(grid, "a", func=iter))
+    paths = []
+    for start in start_points:
+        path = shortest_path(grid, start, end)
+        paths.append(path)
+    return min([len(p) for p in paths if len(p)])

@@ -13,8 +13,8 @@ EXERCISE_FILE_CONTENT = (Path(__file__).parent / "input.txt").read_text()
 
 EXPECTED_SAMPLE_P1 = 31
 EXPECTED_FILE_P1 = 370
-EXPECTED_SAMPLE_P2 = 2
-EXPECTED_FILE_P2 = 2
+EXPECTED_SAMPLE_P2 = 29
+EXPECTED_FILE_P2 = 363
 
 
 def test_p1_sample():
