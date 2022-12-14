@@ -1,4 +1,5 @@
 from ast import literal_eval
+from functools import cmp_to_key
 from itertools import zip_longest
 
 
@@ -8,13 +9,13 @@ def compare(left, right):
     if isinstance(left, int) and isinstance(right, int):
         if left < right:
             print("left < right, in order")
-            return True
+            return 1
         if left > right:
             print("left > right, not in order")
-            return False
+            return -1
         else:
             print("left == right, check next")
-            return None
+            return 0
 
     if isinstance(left, int) and isinstance(right, list):
         print("mixed types, converting left to list")
@@ -28,15 +29,15 @@ def compare(left, right):
         for i, j in zip_longest(left, right):
             if i is None:
                 print("left ran out of items, in order")
-                return True
+                return 1
             elif j is None:
                 print("right ran out of items, not in order")
-                return False
+                return -1
             else:
                 ret = compare(i, j)
-                if ret is not None:
+                if ret != 0:
                     return ret
-        return None
+        return 0
 
 
 def solution_part1(data: str) -> int:
@@ -47,11 +48,15 @@ def solution_part1(data: str) -> int:
         l1, l2 = pair.rstrip().split("\n")
         l1 = literal_eval(l1)
         l2 = literal_eval(l2)
-        if compare(l1, l2):
+        if compare(l1, l2) == 1:
             pair_indices_right_order.append(i)
     print(pair_indices_right_order)
     return sum(pair_indices_right_order)
 
 
 def solution_part2(data: str) -> int:
-    pass
+    pairs = [literal_eval(item) for item in data.split("\n") if item]
+    div_packets = [[[2]], [[6]]]
+    pairs.extend(div_packets)
+    ret = sorted(pairs, key=cmp_to_key(compare), reverse=True)
+    return (ret.index(div_packets[0]) + 1) * (ret.index(div_packets[1]) + 1)
