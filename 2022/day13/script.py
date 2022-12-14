@@ -19,11 +19,11 @@ def compare(left, right):
 
     if isinstance(left, int) and isinstance(right, list):
         print("mixed types, converting left to list")
-        return compare([left], right)
+        left = [left]
 
     if isinstance(left, list) and isinstance(right, int):
         print("mixed types, converting right to list")
-        return compare(left, [right])
+        right = [right]
 
     if isinstance(left, list) and isinstance(right, list):
         for i, j in zip_longest(left, right):
